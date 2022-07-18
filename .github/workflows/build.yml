@@ -10,15 +10,6 @@ jobs:
     name: Build
     runs-on: windows-latest
     steps:
-      - name: dotnet-format
-      # You may pin to the exact commit or the version.
-      # uses: xt0rted/dotnet-format@0cf110fed823231b56a2e6fdf8e5d62dc34c538b
-        uses: xt0rted/dotnet-format@v1.2.0
-        with:
-          # Version of dotnet-format to use
-          version: 3.5
-          # default is 3
-      
       - name: Set up JDK 11
         uses: actions/setup-java@v1
         with:
@@ -52,5 +43,5 @@ jobs:
         shell: powershell
         run: |
           .\.sonar\scanner\dotnet-sonarscanner begin /k:"MarkLee131_WebGoat.NET" /o:"marklee131" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
-          dotnet build
+          MSBuild.exe ./ /t:Rebuild
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
